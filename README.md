@@ -1,73 +1,43 @@
-# React + TypeScript + Vite
+# GIFS App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web construida con React, TypeScript y Vite para buscar, visualizar y compartir gifs obtenidos de la API pública de Giphy. La interfaz está pensada para ser liviana, responsiva y sencilla de usar desde escritorio o dispositivos móviles.
 
-Currently, two official plugins are available:
+## ¿Qué hace la app?
+- Permite buscar gifs escribiendo cualquier término en español o inglés.
+- Consume la API oficial de Giphy y devuelve hasta 10 resultados optimizados por consulta.
+- Muestra los gifs en tarjetas con título y dimensiones para entender la calidad del recurso.
+- Guarda hasta ocho búsquedas previas para relanzarlas rápidamente con un clic.
+- Incluye un encabezado y barra de búsqueda con debounce para evitar peticiones innecesarias.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tecnologías principales
+- React + TypeScript + Vite como base del frontend.
+- Axios para las peticiones HTTP a Giphy.
+- Hooks personalizados (`useState`, `useEffect`) para controlar estado, historial y debounce básico.
+- CSS modularizado (ver `src/index.css`) para los estilos de tarjetas, buscador y listados.
 
-## React Compiler
+## Requisitos previos
+1. Node.js 18+ y npm instalados.
+2. Clave de desarrollador de [Giphy Developers](https://developers.giphy.com/).
+3. Crear un archivo `.env` en la raíz del proyecto con la variable:
+   ```bash
+   VITE_GIPHY_API_KEY=tu_api_key
+   ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Instalación y ejecución
+```bash
+npm install       # instala dependencias
+npm run dev       # levanta el servidor de desarrollo en http://localhost:5173
+npm run build     # genera la versión lista para producción
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Estructura destacada
+- `src/GifsApp.tsx`: componente raíz, coordina encabezado, buscador, historial y resultados.
+- `src/gifs/actions/get-gifs-by-query.actions.ts`: acción asincrónica que consulta Giphy y normaliza la respuesta.
+- `src/gifs/components/GifList.tsx`: renderiza la grilla de gifs.
+- `src/gifs/components/PreviousSearches.tsx`: muestra el historial clickable.
+- `src/shared/components/SearchBar.tsx`: input con debounce de 700 ms para optimizar llamadas.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Próximos pasos sugeridos
+- Agregar paginación o scroll infinito para explorar más resultados por término.
+- Persistir el historial en `localStorage` para conservarlo entre sesiones.
+- Incorporar pruebas unitarias para las acciones y componentes clave.
